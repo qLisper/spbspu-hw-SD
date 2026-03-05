@@ -1,3 +1,5 @@
+#include <iostream>
+
 template< class T >
 struct BiList
 {
@@ -127,4 +129,43 @@ F traverseBack(F f, BiList<T>* h, BiList<T>* e)
     f(h->val);
   }
   return f;
+}
+
+struct sum
+{
+std::string result = "";
+void operator()(char c)
+{ result += c;}
+};
+
+template< class T >
+BiList<T> * fromArray(BiList<T> * & head, T * arr, int size)
+{
+  head = nullptr;
+  BiList<T> * tail = nullptr;
+  for (int i = 0; i < size; i++)
+  {
+    tail = addBack(head, tail, arr[i]);
+  }
+  return tail;
+}
+
+int main()
+{
+    BiList<char> * head = nullptr;
+    BiList<char> * tail = nullptr;
+    char arr[] = {'A', 'B', 'C', 'D'};
+    try
+    {
+        tail = fromArray(head, arr, 4);
+        std::cout << traverse(sum{}, head, nullptr).result << "\n";
+        std::cout << traverseBack(sum{}, tail, nullptr).result << "\n";
+    }
+    catch (...)
+    {
+      std::cerr << "error" << "\n";
+    }
+    head = clear(head, nullptr);
+    tail = nullptr;
+    return 0;
 }
